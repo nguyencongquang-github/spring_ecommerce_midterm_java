@@ -1,5 +1,51 @@
 # README FOR SPRING ECOMMERCE PROJECT
 
+Tổng quan
+---------
+
+**SpringCommerce** là một ứng dụng mua sắm trực tuyến đơn giản được xây dựng bằng **Java Spring Boot**. Mục tiêu của dự án là triển khai một Sản phẩm khả dụng tối thiểu (MVP) thể hiện các chức năng cơ bản của một nền tảng thương mại điện tử, bao gồm hiển thị danh sách sản phẩm, tìm kiếm và lọc, quản lý giỏ hàng, và đặt hàng.
+
+Trong ứng dụng này:
+
+*   Khách hàng có thể tìm kiếm và lọc sản phẩm theo nhiều tiêu chí như danh mục, tên, mô tả của sản phẩm.
+*   Khách hàng có thể xem chi tiết sản phẩm và thêm vào giỏ hàng.
+*   Quy trình thanh toán được triển khai, nhưng việc thanh toán thực hiện bằng tiền mặt khi giao hàng.
+*   Dự án sử dụng **Spring Boot** cho backend, **ReactJs** cho frontend và **MySQL** để lưu trữ dữ liệu.
+    
+
+Các Tính Năng Chính
+-------------------
+1.  **Đăng nhập, đăng kí**: Người dùng có thể đăng nhập, đăng kí theo email và mật khẩu.
+2.  **Tìm kiếm & Lọc Sản phẩm**: Người dùng có thể lọc sản phẩm dựa trên danh mục, tên, mô tả.
+3.  **Giỏ Hàng**: Người dùng có thể thêm sản phẩm vào giỏ hàng và xem nội dung giỏ hàng.
+4.  **Quản lý đơn hàng**: Admin có thể cập nhật trạng thái đơn hàng
+5.  **Quản lý sản phẩm**: Admin có thể CRUD sản phẩm
+6.  **Quản lý danh mục**: Admin có thể CRUD danh mục sản phẩm
+    
+
+Mục Lục
+-------
+
+1.  [Các Nguyên Tắc, Mẫu Thiết Kế](#principles-and-patterns)
+
+2.  [Kiến Trúc Thiết Kế ](#architectural-design)
+    
+3.  [Công nghệ Sử dụng](#technologies-used)
+    
+4.  [Cấu trúc Dự án](#project-structure)
+    
+5.  [Sơ đồ ERD](#erd-diagram)
+    
+6.  [Các Endpoint API](#api-endpoints)
+    
+7.  [Kiểm thử đơn vị](#unit-tests)
+    
+8.  [Cài đặt và Thiết lập](#installation-and-setup)
+    
+9.   [Video Demo](#demo-video)
+    
+    
+
 1\. Các Nguyên Tắc, Mẫu Thiết Kế 
 ------------------------------------------------------------------------------
 
@@ -57,6 +103,7 @@ Khi tôi xây dựng RESTful API, tôi tuân thủ các nguyên tắc cơ bản 
 
 #### **Cách thức hoạt động của RESTful API trong Dự án này**
 Trong dự án của tôi, front-end được xây dựng bằng ReactJS, còn back-end sử dụng Spring Boot. Cả hai giao tiếp với nhau thông qua RESTful API. Cụ thể, khi người dùng gửi yêu cầu từ front-end (ví dụ: nhấn nút để xem sản phẩm), yêu cầu này sẽ được gửi dưới dạng HTTP request tới back-end, nơi Spring Boot xử lý và trả về kết quả.
+
 ![markdown](https://topdev.vn/blog/wp-content/uploads/2019/04/restful-rest-diagram-api.jpg)
 
 1.  **Client** (ReactJS) gửi yêu cầu tới server thông qua một API endpoint, ví dụ: GET /products.
@@ -98,6 +145,7 @@ MySQL là hệ quản trị cơ sở dữ liệu quan hệ (RDBMS) được sử
 
 ### Cloud: AWS (Amazon Web Services)
 Trong dự án này, tôi áp dụng AWS vào việc lưu trữ hình ảnh sản phẩm thông qua AWS S3. AWS S3 cung cấp dịch vụ lưu trữ đám mây đáng tin cậy để lưu trữ các tệp như hình ảnh sản phẩm, tài liệu hướng dẫn và các tệp khác. Điều này giúp tôi quản lý các tệp đính kèm trong ứng dụng một cách dễ dàng và hiệu quả. Trong thời gian tới tôi sẽ cố gắng hoàn thiện sản phẩm và triển khai lên máy chủ EC2 của AWS. 
+
 
 4\. Cấu trúc dự án
 -------------------------------------
@@ -209,7 +257,266 @@ Một số cách tôi thường áp dụng trong việc quản lý style:
 *   **CSS Modules:** Tạo các file CSS riêng cho từng component, giúp tránh sự xung đột tên lớp.
 *   **Styled-components:** Sử dụng thư viện này để viết CSS trực tiếp trong các component bằng cách sử dụng JavaScript.
 
-6\. Unit test
+
+5\. Entity Diagram
+-------------------------------------
+
+### **Sơ đồ quan hệ ERD**
+![Alt text](assets/images/erd.png)
+
+
+### **Mô tả các bảng và quan hệ trong sơ đồ ERD**
+1.  **Bảng users**:
+    
+    *   Lưu trữ thông tin người dùng như tên, email, mật khẩu, số điện thoại, vai trò, và thời gian tạo tài khoản.      
+    *   id là khóa chính (PK).      
+    *   email là trường duy nhất.
+        
+2.  **Bảng addresses**:
+    
+    *   Lưu trữ địa chỉ của người dùng.     
+    *   user\_id là khóa ngoại (FK) tham chiếu đến bảng users.      
+    *   id là khóa chính (PK).
+        
+3.  **Bảng categories**:
+    
+    *   Lưu trữ các danh mục sản phẩm.        
+    *   id là khóa chính (PK).        
+    *   name là trường duy nhất.
+        
+4.  **Bảng products**:
+    
+    *   Lưu trữ thông tin sản phẩm như tên, mô tả, URL ảnh, giá và danh mục sản phẩm.       
+    *   category\_id là khóa ngoại (FK) tham chiếu đến bảng categories.       
+    *   id là khóa chính (PK).
+        
+5.  **Bảng orders**:
+    
+    *   Lưu trữ thông tin đơn hàng, bao gồm tổng giá trị đơn hàng và thời gian tạo đơn.       
+    *   id là khóa chính (PK).
+        
+6.  **Bảng order_items**:
+    
+    *   Lưu trữ các mục trong mỗi đơn hàng.     
+    *   user\_id là khóa ngoại (FK) tham chiếu đến bảng users.     
+    *   product\_id là khóa ngoại (FK) tham chiếu đến bảng products.     
+    *   order\_id là khóa ngoại (FK) tham chiếu đến bảng orders.     
+    *   id là khóa chính (PK).
+        
+
+### **Các quan hệ giữa các bảng:**
+
+*   **Bảng users ↔ Bảng addresses**:   
+    *   Một người dùng có thể có nhiều địa chỉ (quan hệ 1-n).        
+    *   Mối quan hệ được thể hiện qua trường user\_id trong bảng addresses, tham chiếu đến id trong bảng users.
+        
+*   **Bảng categories ↔ Bảng products**:   
+    *   Một danh mục có thể chứa nhiều sản phẩm (quan hệ 1-n).       
+    *   Mối quan hệ được thể hiện qua trường category\_id trong bảng products, tham chiếu đến id trong bảng categories.
+        
+*   **Bảng users ↔ Bảng order_items**:  
+    *   Một người dùng có thể có nhiều mục trong đơn hàng (quan hệ 1-n).      
+    *   Mối quan hệ được thể hiện qua trường user\_id trong bảng order\_items, tham chiếu đến id trong bảng users.
+        
+*   **Bảng products ↔ Bảng order_items**:    
+    *   Một sản phẩm có thể xuất hiện trong nhiều mục của đơn hàng (quan hệ 1-n).       
+    *   Mối quan hệ được thể hiện qua trường product\_id trong bảng order\_items, tham chiếu đến id trong bảng products.
+        
+*   **Bảng orders ↔ Bảng order_items**:    
+    *   Một đơn hàng có thể có nhiều mục (quantities) (quan hệ 1-n).     
+    *   Mối quan hệ được thể hiện qua trường order\_id trong bảng order\_items, tham chiếu đến id trong bảng orders.
+
+
+  
+6\. API Enpoints
+-------------------------------------
+## Auth
+### **Register** 
+```bash
+curl --location 'http://localhost:8080/auth/register' \\
+\--header 'Content-Type: application/json' \\
+\--data-raw '{
+    "email": "nguyencongquang2k4@gmail.com",
+    "name": "Nguyen Cong Quang",
+    "phoneNumber": "0389171890",
+    "password": "123456"
+}'
+```
+### **Login** 
+
+```bash
+curl --location 'http://localhost:8080/auth/login' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "email": "admin@gmail.com",
+    "password": "admin"
+}'
+```
+
+## User
+
+### Get all users (**Only Admin**)
+```bash
+curl --location 'http://localhost:8080/user/get-all' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3MzI3NzI3MzEsImV4cCI6MTc0ODMyNDczMX0.i2-U561z0nN-7g1Gba3eMYyUJ1lrt-cKHhfYuocXWWzB9tCY31_zlqXQ1cS3FrxZ'
+```
+
+### Get user details 
+```bash
+curl --location 'http://localhost:8080/user/my-info' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3MzI3NzI3MzEsImV4cCI6MTc0ODMyNDczMX0.i2-U561z0nN-7g1Gba3eMYyUJ1lrt-cKHhfYuocXWWzB9tCY31_zlqXQ1cS3FrxZ'
+```
+
+## Product
+
+### Get all products
+```bash
+curl --location 'http://localhost:8080/product/get-all' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJxdWFuZ2l0ZXI3NEBnbWFpbC5jb20iLCJpYXQiOjE3MzI3NzI1NTcsImV4cCI6MTc0ODMyNDU1N30.Oc0XAkTHyq576gNhN5OtRN-_J0NizeL6JkGOlQ3q0Oim_qIlsmnLFfFUbxcBTvFv'
+```
+
+### Get product details
+```bash
+curl --location 'http://localhost:8080/product/get-by-product-id/3' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJxdWFuZ2l0ZXI3NEBnbWFpbC5jb20iLCJpYXQiOjE3MzI3NzI1NTcsImV4cCI6MTc0ODMyNDU1N30.Oc0XAkTHyq576gNhN5OtRN-_J0NizeL6JkGOlQ3q0Oim_qIlsmnLFfFUbxcBTvFv'
+```
+
+### Get products by category id
+```bash
+curl --location 'http://localhost:8080/product/get-by-category-id/2' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJxdWFuZ2l0ZXI3NEBnbWFpbC5jb20iLCJpYXQiOjE3MzI3NzI1NTcsImV4cCI6MTc0ODMyNDU1N30.Oc0XAkTHyq576gNhN5OtRN-_J0NizeL6JkGOlQ3q0Oim_qIlsmnLFfFUbxcBTvFv'
+```
+
+### Create product (**Only Admin**)
+```bash
+curl --location 'http://localhost:8080/product/create' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3MzI3NzI3MzEsImV4cCI6MTc0ODMyNDczMX0.i2-U561z0nN-7g1Gba3eMYyUJ1lrt-cKHhfYuocXWWzB9tCY31_zlqXQ1cS3FrxZ' \
+--form 'categoryId="4"' \
+--form 'image=@"/E:/University/Year-3/Enterprise Systems Development Concepts/fashion-shop-management/assets/p_img8.png"' \
+--form 'name="Ao sweater nam"' \
+--form 'description="Ao phu hop ca mua dong, lan mua he"' \
+--form 'price="5556"'
+```
+
+### Search product
+```bash
+curl --location 'http://localhost:8080/product/search?searchValue=Ao%20thun'
+```
+
+### Update product (**Only Admin**)
+```bash
+curl --location --request PUT 'http://localhost:8080/product/update' \
+--header 'Content-Type: application/x-www-form-urlencoded' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3MzI3NzI3MzEsImV4cCI6MTc0ODMyNDczMX0.i2-U561z0nN-7g1Gba3eMYyUJ1lrt-cKHhfYuocXWWzB9tCY31_zlqXQ1cS3FrxZ' \
+--data-urlencode 'productId=2' \
+--data-urlencode 'name=Quan nu'
+```
+
+### Delete product (**Only Admin**)
+```bash
+curl --location --request DELETE 'http://localhost:8080/product/delete/3' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3MzI3NzI3MzEsImV4cCI6MTc0ODMyNDczMX0.i2-U561z0nN-7g1Gba3eMYyUJ1lrt-cKHhfYuocXWWzB9tCY31_zlqXQ1cS3FrxZ'
+```
+
+## Category
+
+### Get category
+```bash
+curl --location 'http://localhost:8080/category/get-category-by-id/2'
+```
+
+### Get all categories
+```bash
+curl --location 'http://localhost:8080/category/get-all' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3MzI3NzI3MzEsImV4cCI6MTc0ODMyNDczMX0.i2-U561z0nN-7g1Gba3eMYyUJ1lrt-cKHhfYuocXWWzB9tCY31_zlqXQ1cS3FrxZ'
+```
+
+### Create category (**Only Admin**)
+```bash
+curl --location 'http://localhost:8080/category/create' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3MzI3NzI3MzEsImV4cCI6MTc0ODMyNDczMX0.i2-U561z0nN-7g1Gba3eMYyUJ1lrt-cKHhfYuocXWWzB9tCY31_zlqXQ1cS3FrxZ' \
+--data '{
+    "name": "Others"
+}'
+```
+
+### Update category (**Only Admin**)
+```bash
+curl --location --request PUT 'http://localhost:8080/category/update/234' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3MzI3NzI3MzEsImV4cCI6MTc0ODMyNDczMX0.i2-U561z0nN-7g1Gba3eMYyUJ1lrt-cKHhfYuocXWWzB9tCY31_zlqXQ1cS3FrxZ' \
+--data '{
+    "name": "Fashion"
+}'
+```
+
+### Delete category (**Only Admin**)
+```bash
+curl --location --request DELETE 'http://localhost:8080/category/delete/5' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3MzI3NzI3MzEsImV4cCI6MTc0ODMyNDczMX0.i2-U561z0nN-7g1Gba3eMYyUJ1lrt-cKHhfYuocXWWzB9tCY31_zlqXQ1cS3FrxZ'
+```
+
+##Order
+### Get all orders
+```bash
+curl --location 'http://localhost:8080/order/filter' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3MzI3NzI3MzEsImV4cCI6MTc0ODMyNDczMX0.i2-U561z0nN-7g1Gba3eMYyUJ1lrt-cKHhfYuocXWWzB9tCY31_zlqXQ1cS3FrxZ'
+```
+
+### Get order item by id
+```bash
+curl --location 'http://localhost:8080/order/filter?itemId=2' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3MzI3NzI3MzEsImV4cCI6MTc0ODMyNDczMX0.i2-U561z0nN-7g1Gba3eMYyUJ1lrt-cKHhfYuocXWWzB9tCY31_zlqXQ1cS3FrxZ'
+```
+
+### Get order item by status (**Only Admin**)
+```bash
+curl --location 'http://localhost:8080/order/filter?status=pending' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3MzI3NzI3MzEsImV4cCI6MTc0ODMyNDczMX0.i2-U561z0nN-7g1Gba3eMYyUJ1lrt-cKHhfYuocXWWzB9tCY31_zlqXQ1cS3FrxZ'
+```
+
+### Create order
+```bash
+curl --location 'http://localhost:8080/order/create' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJhZG1pbkBnbWFpbC5jb20iLCJpYXQiOjE3MzI3NzI3MzEsImV4cCI6MTc0ODMyNDczMX0.i2-U561z0nN-7g1Gba3eMYyUJ1lrt-cKHhfYuocXWWzB9tCY31_zlqXQ1cS3FrxZ' \
+--data '{
+    "items": [
+        {
+            "productId": 1,
+            "quantity": 5
+        },
+        {
+             "productId": 11,
+            "quantity": 1
+        }
+    ]
+}'
+```
+
+### Update order item status (**Only Admin**)
+```bash
+curl --location --request PUT 'http://localhost:8080/order/update-item-status/2?status=CONFIRMED' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJxdWFuZ2l0ZXI3NEBnbWFpbC5jb20iLCJpYXQiOjE3MzI3NzI1NTcsImV4cCI6MTc0ODMyNDU1N30.Oc0XAkTHyq576gNhN5OtRN-_J0NizeL6JkGOlQ3q0Oim_qIlsmnLFfFUbxcBTvFv'
+```
+
+## Address
+## Save and update address
+```bash
+curl --location 'http://localhost:8080/address/save' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzM4NCJ9.eyJzdWIiOiJxdWFuZ2l0ZXI3NEBnbWFpbC5jb20iLCJpYXQiOjE3MzI3NzI1NTcsImV4cCI6MTc0ODMyNDU1N30.Oc0XAkTHyq576gNhN5OtRN-_J0NizeL6JkGOlQ3q0Oim_qIlsmnLFfFUbxcBTvFv'\
+--data '{
+    "street": "Nguyen Huu Tho",
+    "city": "Ho Chi Minh",
+    "state": "Tan Phong",
+    "zipCode": 7000,
+    "country": "VietNam"
+}'
+```
+
+
+7\. Kiểm thử đơn vị (Unit test)
 -------------------------------------
 Unit Test là phương pháp kiểm thử các thành phần nhỏ nhất của ứng dụng, thường là các hàm hoặc phương thức, nhằm đảm bảo rằng chúng hoạt động đúng như mong đợi. Trong dự án, Unit Test đóng vai trò quan trọng trong việc đảm bảo tính đúng đắn, giúp phát hiện và sửa lỗi ngay từ giai đoạn đầu. Đồng thời, Unit Test còn tăng cường độ tin cậy khi đảm bảo các thành phần hoạt động ổn định trong quá trình tích hợp và hỗ trợ bảo trì, cho phép kiểm tra nhanh các ảnh hưởng khi thay đổi hoặc mở rộng ứng dụng.  
 
@@ -220,10 +527,9 @@ Mặc dù đã đạt độ bao phủ test khoảng 70%, với tầng Service đ
 ![Alt text](assets/dobaophutest.png)
 
 
-7\. Hướng dẫn chạy phần mềm ở cục bộ
--------------------------------------
-## Cài đặt ở backend (Spring boot)
 
+8\. Cài đặt và thiết lập
+-------------------------------------
 
 ### **1\. Thiết lập Backend (Spring Boot)**
 
@@ -315,52 +621,8 @@ npm start
 #### Bước 6: Kiểm tra Frontend
 Sau khi ứng dụng React đã chạy, mở trình duyệt và truy cập vào **http://localhost:3000** để xem ứng dụng.
 
-7\. Demo video
+9\. Video demo
 -------------------------------------
 Ấn vào link bên dưới để xem video demo sản phẩm.
 {@embed: https://youtu.be/Ghg-0nROPXo}
-
-## Overview
-
-SpringCommerce is a simple online shopping application built with **Java Spring Boot**. The goal of this project is to implement a Minimum Viable Product (MVP) that showcases the basic functionalities of an e-commerce platform, including product listing, search and filter, shopping cart management, and order placement. 
-
-In this application:
-- Customers can search and filter products by various criteria like category, price, brand, and color.
-- Customers can view the details of the product and add it to their shopping cart.
-- The checkout process is implemented, but payment is done in cash upon delivery.
-- This project uses **Spring Boot** for the backend, **ReactJs**  and **MySQL** for data storage.
-
-## Key Features
-
-1. **Product Search & Filter**: Users can filter products based on category, name, description
-2. **Shopping Cart**: Users can add products to the shopping cart and view the cart.
-3. **Checkout**: Users can proceed to checkout and place an order.
-4. **API Operations**: CRUD operations are implemented for managing products and orders.
-5. **Security**: Basic security implementation using **Spring Security**.
-
-## Table of Contents
-1. Các nguyên tắc và mô hình được áp dụng trong dự án[
-1. [Technologies Used](#technologies-used)
-2. [Project Structure](#project-structure)
-3. [Database Schema](#database-schema)
-4. [API Endpoints](#api-endpoints)
-5. [Security](#security)
-6. [Installation and Setup](#installation-and-setup)
-7. [Testing](#testing)
-8. [Unit Tests](#unit-tests)
-9. [Demo Video](#demo-video)
-10. [License](#license)
-
-## Technologies Used
-
-- **Java 17**: Core programming language for the application.
-- **Spring Boot**: Backend framework.
-- **Spring Security**: For user authentication and authorization.
-- **MySQL/PostgreSQL**: Database management system.
-- **Hibernate/JPA**: ORM for database operations.
-- **Thymeleaf**: Template engine for rendering views (optional, if using web pages).
-- **Maven**: Build tool.
-- **JUnit & Mockito**: Unit testing frameworks.
-
-## Project Structure
 
