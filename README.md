@@ -524,7 +524,7 @@ Tôi đã sử dụng **JUnit** và **Mockito** để kiểm tra các tầng Ser
 
 Mặc dù đã đạt độ bao phủ test khoảng 70%, với tầng Service được kiểm tra kỹ lưỡng, nhưng tôi vẫn cần cải thiện khả năng kiểm tra các endpoint bảo mật của tầng Controller để đảm bảo chất lượng toàn diện cho ứng dụng.
 
-![Alt text](assets/dobaophutest.png)
+![dobaophucuatest](https://github.com/user-attachments/assets/1c021dfb-207e-45bf-98e7-818470094f70)
 
 
 
