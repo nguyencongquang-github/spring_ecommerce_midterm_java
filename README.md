@@ -577,7 +577,7 @@ git clone https://github.com/nguyencongquang-github/spring_ecommerce_midterm_jav
 CREATE DATABASE your_db;
 ```
 #### Bước 4: Cấu hình Application Properties
-Cấu hình kết nối cơ sở dữ liệu trong tệp application.properties hoặc application.yml nằm trong src/main/resources. Chỉnh sửa lại tên database và username, password của bạn và Xóa **111* ở *aws.s3.accessKey* và *aws.s3.secretKey* để chạy được.
+Cấu hình kết nối cơ sở dữ liệu trong tệp application.properties hoặc application.yml nằm trong src/main/resources. Chỉnh sửa lại tên database và username, password của bạn và Xóa **111** ở cuối *aws.s3.accessKey* và *aws.s3.secretKey* để chạy được.
 
 ```bash
 spring.datasource.url=jdbc:mysql://localhost:3306/your_db
