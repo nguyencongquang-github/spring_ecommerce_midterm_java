@@ -85,6 +85,7 @@ Trong dự án này, việc áp dụng IoC thông qua Spring Boot giúp giảm t
 
 ### **Kiến trúc RESTful API**
 RESTful API (Representational State Transfer) là một kiến trúc phần mềm mà tôi đã sử dụng trong dự án này để xây dựng các dịch vụ web. RESTful API cho phép các ứng dụng giao tiếp với nhau qua giao thức HTTP, sử dụng các phương thức HTTP tiêu chuẩn như GET, POST, PUT, DELETE để thao tác với các tài nguyên.
+
 ![markdown](https://topdev.vn/blog/wp-content/uploads/2019/04/restful-api.jpg)
 
 #### **Cấu trúc và Nguyên tắc của RESTful API**
@@ -145,6 +146,26 @@ MySQL là hệ quản trị cơ sở dữ liệu quan hệ (RDBMS) được sử
 
 ### Cloud: AWS (Amazon Web Services)
 Trong dự án này, tôi áp dụng AWS vào việc lưu trữ hình ảnh sản phẩm thông qua AWS S3. AWS S3 cung cấp dịch vụ lưu trữ đám mây đáng tin cậy để lưu trữ các tệp như hình ảnh sản phẩm, tài liệu hướng dẫn và các tệp khác. Điều này giúp tôi quản lý các tệp đính kèm trong ứng dụng một cách dễ dàng và hiệu quả. Trong thời gian tới tôi sẽ cố gắng hoàn thiện sản phẩm và triển khai lên máy chủ EC2 của AWS. 
+
+### Security: Spring Security
+
+Spring Security là một trong những công nghệ quan trọng được tôi áp dụng để bảo vệ ứng dụng. Dưới đây là cách Spring Security được sử dụng trong dự án này:
+
+*   **Xác thực người dùng (Authentication)**:Spring Security cung cấp một cơ chế mạnh mẽ để xác thực người dùng thông qua việc tích hợp với cơ sở dữ liệu hoặc các dịch vụ xác thực bên ngoài. Trong dự án này, tôi sử dụng cơ chế xác thực dựa trên tên đăng nhập và mật khẩu được lưu trữ trong cơ sở dữ liệu MySQL.
+    
+*   **Phân quyền (Authorization)**:Với Spring Security, tôi có thể dễ dàng kiểm soát quyền truy cập vào các tài nguyên hoặc chức năng cụ thể của ứng dụng. Các vai trò như _admin_ và _user_ được định nghĩa để xác định ai có quyền thực hiện các hành động như quản lý sản phẩm, đặt hàng hoặc xem thông tin.
+    
+*   **JWT (JSON Web Token)**:Tôi sử dụng JWT để quản lý phiên đăng nhập người dùng. Sau khi xác thực thành công, một token JWT được tạo ra và gửi lại cho người dùng. Token này được sử dụng để xác thực các yêu cầu tiếp theo, giúp loại bỏ sự phụ thuộc vào lưu trữ trạng thái phiên (session) trên máy chủ.
+    
+*   **Bảo vệ endpoint API**:Spring Security cho phép tôi định cấu hình các endpoint API chỉ được truy cập bởi những người dùng có quyền hợp lệ. Ví dụ:
+    
+    *   Các endpoint liên quan đến quản lý sản phẩm chỉ được truy cập bởi _admin_.
+        
+    *   Các endpoint liên quan đến đặt hàng hoặc xem giỏ hàng chỉ dành cho người dùng đã đăng nhập.
+        
+*   **Mã hóa mật khẩu**:Tôi sử dụng BCryptPasswordEncoder để mã hóa mật khẩu người dùng trước khi lưu vào cơ sở dữ liệu, đảm bảo rằng dữ liệu nhạy cảm luôn được bảo vệ.
+    
+*   **Cấu hình dễ dàng**:Spring Security hỗ trợ cấu hình linh hoạt thông qua file SecurityConfig. Tôi sử dụng các annotation như @EnableWebSecurity và triển khai các phương thức như configure(HttpSecurity http) để kiểm soát luồng xác thực và phân quyền.
 
 
 4\. Cấu trúc dự án
@@ -564,6 +585,18 @@ spring.datasource.username=your_username
 spring.datasource.password=your_password
 spring.jpa.hibernate.ddl-auto=update
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+#JWT
+security.jwt.secret-key =09AsC/ucc50zVPxpaxTXGK5NC90jU1XtzJv62R0ROxtMXQ7ANBsv4TMzkUDopYdR
+security.jwt.expiration-time=3600000
+
+# AWS S3 configuration
+aws.s3.accessKey=AKIA2ZIOM6RCSLKMPCSY111
+aws.s3.secretKey=Kr89ZFzg/JaT4j5UopbA3egLE1vjxODVdkxHN7lc111
+
+# Admin account
+admin.email=admin@gmail.com
+admin.password=admin123
 ```
 
 #### Bước 5: Xây dựng và Chạy Backend
