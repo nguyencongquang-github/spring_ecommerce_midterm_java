@@ -262,7 +262,7 @@ Một số cách tôi thường áp dụng trong việc quản lý style:
 -------------------------------------
 
 ### **Sơ đồ quan hệ ERD**
-![Alt text](assets/images/erd.png)
+![erd](https://github.com/user-attachments/assets/84b26864-f011-4d2d-9a1e-513fcae90ab1)
 
 
 ### **Mô tả các bảng và quan hệ trong sơ đồ ERD**
